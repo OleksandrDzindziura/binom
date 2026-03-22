@@ -1,0 +1,31 @@
+{
+  "dashboard": "Панель керування",
+  "portfolio": "Виконані роботи",
+  "archive": "Архів",
+  "callbacks": "Заявки",
+  "pages": "Сторінки",
+  "projects": {
+    "title": "Виконані роботи",
+    "add": "Додати проект",
+    "edit": "Редагувати",
+    "delete": "Видалити",
+    "archive": "Архівувати",
+    "unarchive": "Розархівувати",
+    "published": "Опубліковано",
+    "draft": "Чернетка",
+    "featured": "Рекомендоване",
+    "categories": {
+      "kitchen": "Кухня",
+      "wardrobe": "Шафа",
+      "bathroom": "Ванна",
+      "office": "Офіс",
+      "other": "Інше"
+    }
+  },
+  "callbacks": {
+    "title": "Заявки",
+    "new": "Нова",
+    "contacted": "Опрацьована",
+    "closed": "Закрита"
+  }
+}

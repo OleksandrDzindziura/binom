@@ -1,0 +1,17 @@
+{
+  "title": "Вхід в систему",
+  "titleRegister": "Реєстрація",
+  "email": "Email",
+  "emailPlaceholder": "your@email.com",
+  "password": "Пароль",
+  "name": "Ім'я",
+  "namePlaceholder": "Ваше ім'я",
+  "submit": "Увійти",
+  "submitRegister": "Зареєструватись",
+  "hasAccount": "Вже є акаунт?",
+  "signIn": "Увійти",
+  "noAccount": "Немає акаунту?",
+  "createAccount": "Створити акаунт",
+  "error": "Невірний email або пароль",
+  "forgotPassword": "Забули пароль?"
+}

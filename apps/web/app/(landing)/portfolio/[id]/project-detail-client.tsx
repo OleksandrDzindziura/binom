@@ -1,0 +1,458 @@
+'use client';
+
+import { useState, useCallback, useEffect, useRef, startTransition } from 'react';
+import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import { orpc } from '@/lib/orpc';
+import { formatUSD } from '@repo/schemas';
+import { CallbackForm } from '@/components/landing/CallbackForm';
+import { BookingModal } from '@/components/landing/BookingModal';
+import { ArrowLeft, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Heart, X } from 'lucide-react';
+import YALightbox from 'yet-another-react-lightbox';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import 'yet-another-react-lightbox/styles.css';
+import { useFavorites } from '@/hooks/use-favorites';
+
+const statusLabels: Record<string, string> = {
+  in_stock: 'В наявності',
+  on_order: 'На замовлення',
+  in_transit: 'В дорозі',
+};
+
+const statusColors: Record<string, string> = {
+  in_stock: 'bg-green-500',
+  on_order: 'bg-yellow-500',
+  in_transit: 'bg-blue-500',
+};
+
+const specLabels: Record<string, string> = {
+  engineType: 'Тип палива',
+  engineVolume: 'Об\'єм двигуна',
+  transmission: 'КПП',
+  driveType: 'Привід',
+  bodyType: 'Тип кузова',
+  color: 'Колір',
+  vinCode: 'VIN-код',
+  mileageKm: 'Пробіг',
+  year: 'Рік',
+};
+
+const locationLabels: Record<string, string> = {
+  rivne: 'м. Рівне, Млинівська 29 Б',
+  obariv: 'Обарів, вул. Миколаївська, 1',
+};
+
+const valueLabels: Record<string, Record<string, string>> = {
+  engineType: { petrol: 'Бензин', diesel: 'Дизель', electric: 'Електро', hybrid: 'Гібрид', lpg: 'Газ', petrol_lpg: 'Газ пропан-бутан/Бензин', petrol_cng: 'Газ метан/Бензин', hybrid_petrol: 'Гібрид (HEV)', hybrid_diesel: 'Гібрид/Дизель', plug_in_hybrid: 'Гібрид (PHEV)', hybrid_mhev: 'Гібрид (MHEV)', hybrid_reev: 'Гібрид (REEV)' },
+  transmission: { manual_5: 'Механіка 5-ст.', manual_6: 'Механіка 6-ст.', manual: 'Механіка', automatic: 'Автомат', tiptronic: 'Типтронік', robot: 'Робот', variator: 'Варіатор' },
+  driveType: { fwd: 'Передній', rwd: 'Задній', awd: 'Повний' },
+  bodyType: { sedan: 'Седан', suv: 'SUV', hatchback: 'Хетчбек', wagon: 'Універсал', coupe: 'Купе', van: 'Фургон', pickup: 'Пікап', convertible: 'Кабріолет', minivan: 'Мінівен' },
+};
+
+export default function ProjectDetailClient({ id }: { id: string }) {
+  const { data: car, isLoading } = useQuery(orpc.catalog.cars.getById.queryOptions({
+    input: { id: parseInt(id) },
+  }));
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const { toggle, isFavorite } = useFavorites();
+
+  const { data: settingsMap } = useQuery(orpc.delivery.getSettingsMap.queryOptions({
+    input: {},
+  }));
+  const globalBookingAmount = settingsMap?.bookingAmountCents ?? 400000;
+  const bookingAmount = car?.bookingPriceCents ?? globalBookingAmount;
+
+  if (isLoading) return <div className="container mx-auto px-4 py-12 text-center text-slate-400">Завантаження...</div>;
+  if (!car) return <div className="container mx-auto px-4 py-12 text-center text-slate-400">Автомобіль не знайдено</div>;
+
+  const images = car.images ?? [];
+  const carName = `${car.make?.name} ${car.model?.name}`;
+
+  const isElectric = car.engineType === 'electric';
+
+  const specs = [
+    { key: 'year', label: specLabels.year, value: car.year },
+    { key: 'mileageKm', label: specLabels.mileageKm, value: car.mileageKm
+      ? `${car.mileageKm.toLocaleString()} км`
+      : null },
+    { key: 'engineType', label: specLabels.engineType, value: valueLabels.engineType[car.engineType] },
+    { key: 'engineVolume', label: isElectric
+      ? 'Потужність'
+      : specLabels.engineVolume, value: car.engineVolume
+      ? `${car.engineVolume} ${isElectric
+        ? 'кВт'
+        : 'л'}`
+      : null },
+    { key: 'transmission', label: specLabels.transmission, value: valueLabels.transmission[car.transmission] },
+    { key: 'driveType', label: specLabels.driveType, value: car.driveType
+      ? valueLabels.driveType[car.driveType]
+      : null },
+    { key: 'bodyType', label: specLabels.bodyType, value: car.bodyType
+      ? valueLabels.bodyType[car.bodyType]
+      : null },
+    { key: 'color', label: specLabels.color, value: car.color },
+    { key: 'vinCode', label: specLabels.vinCode, value: car.vinCode },
+  ].filter((s) => s.value != null);
+
+  return (
+    <div className="py-8">
+      <div className="container mx-auto px-4">
+        <Link
+          href="/portfolio"
+          className="flex items-center gap-2 text-amber-400 hover:text-amber-300 mb-6"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Назад до каталогу
+        </Link>
+
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Photo Gallery */}
+          <div>
+            {images.length > 0
+              ? (
+                <div
+                  className="aspect-[4/3] bg-slate-800 rounded-lg overflow-hidden cursor-pointer relative group"
+                  onClick={() => startTransition(() => setLightboxOpen(true))}
+                >
+                  <img
+                    src={images[selectedIndex].url}
+                    alt={`${carName} ${car.year} — фото ${selectedIndex + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                    <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm bg-black/50 px-3 py-1.5 rounded-full">
+                      {selectedIndex + 1} / {images.length}
+                    </span>
+                  </div>
+                </div>
+              )
+              : (
+                <div className="aspect-[4/3] bg-slate-800 rounded-lg flex items-center justify-center">
+                  <span className="text-slate-500">Фото відсутнє</span>
+                </div>
+              )}
+            {images.length > 1 && (
+              <div className="grid grid-cols-6 gap-2 mt-2">
+                {images.slice(0, 6).map((img: any, i: number) => {
+                  const isLast = i === 5 && images.length > 6;
+                  const remaining = images.length - 6;
+                  return (
+                    <button
+                      key={img.id}
+                      onClick={() => {
+                        setSelectedIndex(i);
+                        if (isLast) startTransition(() => setLightboxOpen(true));
+                      }}
+                      className={`relative aspect-square bg-slate-800 rounded overflow-hidden border-2 transition-colors ${
+                        i === selectedIndex
+                          ? 'border-amber-400'
+                          : 'border-transparent hover:border-slate-600'
+                      }`}
+                    >
+                      <img
+                        src={img.url}
+                        alt={`${carName} — мініатюра ${i + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      {isLast && (
+                        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                          <span className="text-white font-bold text-lg">+{remaining}</span>
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Details */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <h1 className="text-3xl font-bold">
+                {carName}
+              </h1>
+              <span className={`text-xs px-3 py-1 rounded-full text-white ${statusColors[car.status]}`}>
+                {statusLabels[car.status]}
+              </span>
+              <button
+                onClick={() => toggle(car.id)}
+                className="ml-auto p-2 rounded-full hover:bg-slate-800 transition-colors"
+                aria-label={isFavorite(car.id)
+                  ? 'Видалити з вибраного'
+                  : 'Додати у вибране'}
+              >
+                <Heart
+                  className={`h-6 w-6 transition-colors ${
+                    isFavorite(car.id)
+                      ? 'fill-red-500 text-red-500'
+                      : 'text-slate-400 hover:text-red-400'
+                  }`}
+                />
+              </button>
+            </div>
+
+            <p className="text-4xl font-bold text-amber-400 mb-2">{formatUSD(car.priceCents)}</p>
+
+            {!car.isBooked && (
+              <button
+                onClick={() => setBookingOpen(true)}
+                className="mb-4 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded-lg transition-colors w-full sm:w-auto"
+              >
+                Забронювати за {new Intl.NumberFormat('uk-UA').format(bookingAmount / 100)} грн
+              </button>
+            )}
+            {car.isBooked && (
+              <div className="mb-4 px-6 py-3 bg-slate-700 text-slate-300 font-semibold rounded-lg text-center w-full sm:w-auto">
+                Заброньовано
+              </div>
+            )}
+
+            {car.location && (
+              <p className="text-sm text-slate-400 mb-6">
+                {locationLabels[car.location]}
+              </p>
+            )}
+
+            {/* Specs Table */}
+            <div className="bg-slate-900 rounded-lg overflow-hidden mb-6">
+              {specs.map((spec, i) => (
+                <div
+                  key={spec.key}
+                  className={`flex justify-between px-4 py-3 ${i % 2 === 0
+                    ? 'bg-slate-800/50'
+                    : ''}`}
+                >
+                  <span className="text-slate-400">{spec.label}</span>
+                  <span className="text-white font-medium">{spec.value}</span>
+                </div>
+              ))}
+            </div>
+
+            {car.description && (
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold mb-2">Опис</h3>
+                <p className="text-slate-300 break-words whitespace-pre-wrap">{car.description}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Callback Form */}
+        <section className="mt-12 py-12 text-center">
+          <h2 className="text-2xl font-bold mb-4">
+            Цікавить цей автомобіль? <span className="text-amber-400">Залиште заявку!</span>
+          </h2>
+          <CallbackForm carId={car.id} />
+        </section>
+      </div>
+
+      {/* Booking Modal */}
+      <BookingModal
+        open={bookingOpen}
+        onOpenChange={setBookingOpen}
+        carId={car.id}
+        carName={carName}
+        bookingAmount={bookingAmount}
+      />
+
+      {/* Lightbox */}
+      {lightboxOpen && images.length > 0 && (
+        <Lightbox
+          images={images}
+          initialIndex={selectedIndex}
+          onClose={() => setLightboxOpen(false)}
+          onIndexChange={setSelectedIndex}
+          carName={carName}
+          carPrice={formatUSD(car.priceCents)}
+        />
+      )}
+    </div>
+  );
+}
+
+function Lightbox({
+  images,
+  initialIndex,
+  onClose,
+  onIndexChange,
+  carName,
+  carPrice,
+}: {
+  images: { id: number; url: string }[];
+  initialIndex: number;
+  onClose: () => void;
+  onIndexChange: (_i: number) => void;
+  carName: string;
+  carPrice: string;
+}) {
+  const [index, setIndex] = useState(initialIndex);
+  const [zoomOpen, setZoomOpen] = useState(false);
+  const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const go = useCallback((dir: 1 | -1) => {
+    setIndex((prev) => (prev + dir + images.length) % images.length);
+  }, [images.length]);
+
+  useEffect(() => {
+    onIndexChange(index);
+    thumbRefs.current[index]?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, [index, onIndexChange]);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (zoomOpen) return; // YALightbox handles its own keys
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKey);
+    };
+  }, [onClose, go, zoomOpen]);
+
+  const slides = images.map((img) => ({ src: img.url }));
+
+  return (
+    <>
+      {/* ══ ZOOM — yet-another-react-lightbox ══════════════════════ */}
+      {zoomOpen && (
+        <YALightbox
+          open={zoomOpen}
+          close={() => setZoomOpen(false)}
+          slides={slides}
+          index={index}
+          on={{ view: ({ index: i }) => setIndex(i) }}
+          plugins={[Zoom]}
+          zoom={{ maxZoomPixelRatio: 4, scrollToZoom: true }}
+          styles={{ root: { zIndex: 1100 } }}
+        />
+      )}
+
+      {/* ══ MAIN LIGHTBOX ══════════════════════════════════════════ */}
+      <div className="fixed inset-0 z-[1000] bg-black/95 flex flex-col md:flex-row">
+
+        {/* ── MOBILE ─────────────────────────────── */}
+        <div className="md:hidden flex flex-col h-full">
+          <div className="flex items-start justify-between px-4 pt-4 pb-3 shrink-0">
+            <div>
+              <p className="text-white font-bold text-base leading-tight">{carName}</p>
+              <p className="text-white font-bold text-xl mt-0.5">{carPrice}</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-white/60 hover:text-white p-1 ml-3 shrink-0 mt-0.5"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto">
+            {images.map((img, i) => (
+              <img
+                key={img.id}
+                src={img.url}
+                alt={`${carName} — фото ${i + 1}`}
+                className="w-full object-contain block cursor-zoom-in"
+                onClick={() => { setIndex(i); setZoomOpen(true); }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* ── DESKTOP ────────────────────────────── */}
+        <div className="hidden md:flex w-full h-full">
+
+          {/* Left: thumbnail strip */}
+          <div className="w-[136px] flex flex-col bg-black/40 shrink-0">
+            <button
+              onClick={() => go(-1)}
+              className="flex items-center justify-center py-2.5 text-white/40 hover:text-white transition-colors shrink-0"
+            >
+              <ChevronUp className="h-5 w-5" />
+            </button>
+
+            <div className="flex-1 overflow-y-auto flex flex-col gap-1.5 px-2.5 py-1">
+              {images.map((img, i) => (
+                <button
+                  key={img.id}
+                  ref={(el) => { thumbRefs.current[i] = el; }}
+                  onClick={() => setIndex(i)}
+                  className={`relative shrink-0 aspect-[4/3] rounded overflow-hidden border-2 transition-all duration-150 ${
+                    i === index
+                      ? 'border-white opacity-100'
+                      : 'border-transparent opacity-40 hover:opacity-70'
+                  }`}
+                >
+                  <img
+                    src={img.url}
+                    alt={`Мініатюра ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => go(1)}
+              className="flex items-center justify-center py-2.5 text-white/40 hover:text-white transition-colors shrink-0"
+            >
+              <ChevronDown className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* Center: main photo — click to zoom */}
+          <div className="flex-1 relative flex items-center justify-center">
+            <img
+              src={images[index].url}
+              alt={`${carName} — фото ${index + 1}`}
+              className="max-h-full max-w-full object-contain p-6 cursor-zoom-in"
+              onClick={() => setZoomOpen(true)}
+            />
+
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={() => go(-1)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
+                >
+                  <ChevronLeft className="h-7 w-7" />
+                </button>
+                <button
+                  onClick={() => go(1)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
+                >
+                  <ChevronRight className="h-7 w-7" />
+                </button>
+              </>
+            )}
+
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/50 text-sm bg-black/40 px-3 py-1 rounded-full pointer-events-none">
+              {index + 1} / {images.length}
+            </div>
+          </div>
+
+          {/* Right: info panel */}
+          <div className="w-72 bg-zinc-900 flex flex-col shrink-0 p-6">
+            <div className="flex items-start justify-between mb-1">
+              <p className="text-white font-bold text-xl leading-snug pr-2">{carName}</p>
+              <button
+                onClick={onClose}
+                className="text-white/40 hover:text-white shrink-0 p-0.5 transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <p className="text-2xl font-bold text-white">{carPrice}</p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "home": "Головна",
+    "portfolio": "Портфоліо",
+    "about": "Про нас",
+    "contact": "Контакти",
+    "faq": "FAQ"
+  },
+  "footer": {
+    "company": "Binom Mebli",
+    "copyright": "© {{year}} Binom Mebli. Всі права захищені.",
+    "address": "Адреса: placeholder",
+    "phone": "Телефон: placeholder",
+    "email": "Email: placeholder"
+  },
+  "callback": {
+    "title": "Залиште заявку",
+    "subtitle": "Ми зателефонуємо вам найближчим часом",
+    "name": "Ваше ім'я",
+    "phone": "Номер телефону",
+    "message": "Повідомлення (необов'язково)",
+    "submit": "Надіслати заявку",
+    "success": "Дякуємо! Ми зв'яжемося з вами найближчим часом.",
+    "error": "Помилка. Спробуйте ще раз."
+  },
+  "common": {
+    "loading": "Завантаження...",
+    "error": "Помилка",
+    "notFound": "Не знайдено",
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "delete": "Видалити",
+    "edit": "Редагувати",
+    "add": "Додати",
+    "back": "Назад",
+    "search": "Пошук"
+  }
+}

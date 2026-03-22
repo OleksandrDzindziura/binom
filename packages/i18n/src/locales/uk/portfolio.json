@@ -1,0 +1,13 @@
+{
+  "title": "Портфоліо",
+  "subtitle": "Наші виконані роботи",
+  "categories": {
+    "kitchen": "Кухня",
+    "wardrobe": "Шафа",
+    "bathroom": "Ванна",
+    "office": "Офіс",
+    "other": "Інше"
+  },
+  "allCategories": "Всі категорії",
+  "noProjects": "Проектів поки немає"
+}

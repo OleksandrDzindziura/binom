@@ -1,0 +1,16 @@
+:80 {
+	@api host api.binom-mebli.com
+	handle @api {
+		reverse_proxy api:3000
+	}
+
+	@www host www.binom-mebli.com
+	handle @www {
+		redir https://binom-mebli.com{uri} permanent
+	}
+
+	@web host binom-mebli.com
+	handle @web {
+		reverse_proxy web:3000
+	}
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Контакти",
+  "subtitle": "Зв'яжіться з нами",
+  "address": {
+    "label": "Адреса",
+    "value": "placeholder"
+  },
+  "phone": {
+    "label": "Телефон",
+    "value": "placeholder"
+  },
+  "email": {
+    "label": "Email",
+    "value": "placeholder"
+  },
+  "workingHours": {
+    "label": "Графік роботи",
+    "value": "Щодня: 9:00 – 18:00"
+  }
+}
