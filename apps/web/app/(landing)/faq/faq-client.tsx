@@ -11,9 +11,9 @@ export default function FAQClient() {
   return (
     <div className="py-12">
       <div className="container mx-auto px-4 max-w-3xl">
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-4 text-center uppercase">Часті запитання</h1>
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-4 text-center uppercase text-black">Часті запитання</h1>
         <p className="text-slate-400 text-center mb-10">
-          Відповіді на найпоширеніші запитання про наші послуги
+          Відповіді на найпоширеніші питання про виготовлення та сервіс меблів
         </p>
 
         <div className="space-y-3">

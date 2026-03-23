@@ -55,7 +55,7 @@ export default function EditProjectForm({ project, projectId }: EditProjectFormP
           data: {
             title: value.title,
             description: value.description || undefined,
-            category: value.category as 'kitchen' | 'wardrobe' | 'bathroom' | 'office' | 'other',
+            category: value.category as 'кухня' | 'шафа' | 'ванна' | 'офіс' | 'інше',
             isPublished: value.isPublished,
             isFeatured: value.isFeatured,
           },
@@ -134,7 +134,7 @@ export default function EditProjectForm({ project, projectId }: EditProjectFormP
               pendingImages={pendingImages}
               onExistingChange={setExistingImages}
               onPendingChange={setPendingImages}
-              onRemoveExisting={(id) => setRemovedImageIds((prev) => [...prev, id])}
+              onRemoveExisting={(id: number) => setRemovedImageIds((prev: number[]) => [...prev, id])}
             />
           </CardContent>
         </Card>

@@ -1,6 +1,12 @@
 import { z } from 'zod';
 
-export const UPLOAD_CATEGORIES = ['car_photo', 'news_image', 'page_image', 'make_logo'] as const;
+/** Prefix segment in R2 object keys: `{category}/{uuid}.{ext}` */
+export const UPLOAD_CATEGORIES = [
+  'project_photo',
+  'page_image',
+  'article_image',
+  'logo',
+] as const;
 
 export const uploadResultSchema = z.object({
   key: z.string(),

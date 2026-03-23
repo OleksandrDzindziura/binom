@@ -16,19 +16,19 @@ export default function ProjectFormFields({ form }: ProjectFormFieldsProps) {
       <CardContent className="space-y-4">
         <form.AppField name="title">
           {(field: any) => (
-            <field.TextField label="Назва проекту" placeholder="Кухня в стилі модерн" required />
+            <field.Input label="Назва проекту" placeholder="Кухня в стилі модерн" required />
           )}
         </form.AppField>
 
         <form.AppField name="description">
           {(field: any) => (
-            <field.TextareaField label="Опис" placeholder="Короткий опис виконаної роботи..." />
+            <field.Textarea label="Опис" placeholder="Короткий опис виконаної роботи..." />
           )}
         </form.AppField>
 
         <form.AppField name="category">
           {(field: any) => (
-            <field.SelectField
+            <field.Select
               label="Категорія"
               options={Object.entries(categoryLabels).map(([value, label]) => ({ value, label }))}
             />
@@ -37,10 +37,10 @@ export default function ProjectFormFields({ form }: ProjectFormFieldsProps) {
 
         <div className="flex gap-6">
           <form.AppField name="isPublished">
-            {(field: any) => <field.CheckboxField label="Опубліковано" />}
+            {(field: any) => <field.Checkbox label="Опубліковано" />}
           </form.AppField>
           <form.AppField name="isFeatured">
-            {(field: any) => <field.CheckboxField label="Рекомендоване" />}
+            {(field: any) => <field.Checkbox label="Рекомендоване" />}
           </form.AppField>
         </div>
       </CardContent>

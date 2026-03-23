@@ -36,12 +36,12 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section id="services" className="py-16 bg-slate-950">
+    <section id="services" className="py-16 bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-4 uppercase">
+        <h2 className="text-3xl md:text-4xl text-foreground font-extrabold text-center mb-4 uppercase">
           Як ми працюємо
         </h2>
-        <p className="text-center text-slate-400 mb-12 max-w-xl mx-auto">
+        <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
           Повний цикл від першої консультації до встановлення та гарантійного обслуговування.
         </p>
 
@@ -49,15 +49,15 @@ export function ServicesSection() {
           {services.map((service) => (
             <div
               key={service.title}
-              className="p-6 border border-slate-700 bg-slate-900 hover:border-amber-400/50 transition-colors group"
+              className="rounded-2xl p-6 border border-border bg-gray-800 hover:border-amber-400/50 transition-colors group"
             >
-              <div className="w-12 h-12 bg-amber-400 rounded flex items-center justify-center mb-5">
+              <div className="w-12 h-12 bg-amber-400 rounded-full flex items-center justify-center mb-5">
                 <service.icon className="h-6 w-6 text-slate-900" />
               </div>
-              <h3 className="text-lg font-bold mb-3 uppercase group-hover:text-amber-400 transition-colors">
+              <h3 className="text-lg font-bold mb-3 uppercase  transition-colors">
                 {service.title}
               </h3>
-              <p className="text-sm text-slate-400 leading-relaxed">{service.desc}</p>
+              <p className="text-sm text-gray-300 leading-relaxed">{service.desc}</p>
             </div>
           ))}
         </div>
@@ -65,7 +65,7 @@ export function ServicesSection() {
         <div className="text-center mt-12">
           <Link
             href="/contact"
-            className="inline-block px-10 py-4 border-2 border-amber-400 text-white font-bold text-lg hover:bg-amber-400/10 transition-colors uppercase"
+            className="inline-block px-10 py-4 border-2 border-border text-foreground font-bold text-lg hover:bg-accent transition-colors uppercase"
           >
             Замовити консультацію
           </Link>

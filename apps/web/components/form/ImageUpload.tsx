@@ -19,6 +19,8 @@ export type ExistingImage = {
 type ImageUploadProps = {
   existingImages?: ExistingImage[];
   onExistingChange?: (images: ExistingImage[]) => void;
+  /** Called when user removes an existing (already-saved) image. */
+  onRemoveExisting?: (id: number) => void;
   pendingImages: PendingImage[];
   onPendingChange: (images: PendingImage[]) => void;
   maxImages?: number;
@@ -27,6 +29,7 @@ type ImageUploadProps = {
 export default function ImageUpload({
   existingImages = [],
   onExistingChange,
+  onRemoveExisting,
   pendingImages,
   onPendingChange,
   maxImages = 20,
@@ -48,6 +51,7 @@ export default function ImageUpload({
 
   const removeExisting = (index: number) => {
     if (!onExistingChange) return;
+    onRemoveExisting?.(existingImages[index]?.id);
     const updated = existingImages.filter((_, i) => i !== index);
     if (updated.length > 0 && !updated.some((img) => img.isMain) && !pendingImages.some((img) => img.isMain)) {
       updated[0].isMain = true;

@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export function Footer() {
   return (
-    <footer className="bg-slate-950 border-t border-slate-800">
+    <footer className="bg-white border-t border-slate-800">
       <div className="container mx-auto px-4 py-10">
         <div className="grid md:grid-cols-4 gap-8 items-start">
           {/* Logo & Contact */}
@@ -14,8 +14,8 @@ export function Footer() {
             <div className="mt-4 space-y-2 text-sm text-slate-400">
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-amber-400 shrink-0" />
-                <a href="mailto:info@binom-mebli.com" className="hover:text-amber-400 transition-colors">
-                  info@binom-mebli.com
+                <a href="mailto:meblibinom@gmail.com" className="hover:text-amber-400 transition-colors">
+                meblibinom@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-2">
@@ -54,11 +54,11 @@ export function Footer() {
           {/* Phone */}
           <div className="space-y-2">
             <a
-              href="tel:+380000000000"
-              className="flex items-center gap-2 text-sm text-slate-300 hover:text-amber-400 transition-colors"
+              href="tel:+380961786832"
+              className="flex items-center gap-2 text-sm text-slate-300 hover:text-gray-700 transition-colors"
             >
-              <Phone className="h-4 w-4 text-amber-400" />
-              +380 00 000 00 00
+              <Phone className="h-4 w-4 text-black" />
+              +380 96 178 68 32
             </a>
           </div>
 
@@ -66,9 +66,9 @@ export function Footer() {
           <div className="flex justify-end">
             <Link
               href="/contact"
-              className="flex items-center gap-2 px-6 py-3 border-2 border-amber-400 text-white font-bold hover:bg-amber-400/10 transition-colors"
+              className="flex items-center gap-2 px-6 py-3 border-2 border-gray-700 text-black font-bold hover:bg-gray-100 transition-colors"
             >
-              <Phone className="h-5 w-5 text-amber-400" />
+              <Phone className="h-5 w-5 text-black" />
               Замовити консультацію
             </Link>
           </div>

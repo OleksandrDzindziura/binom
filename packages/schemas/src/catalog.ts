@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
-export const projectCategories = ['kitchen', 'wardrobe', 'bathroom', 'office', 'other'] as const;
+export const projectCategories = ['кухня', 'шафа', 'ванна', 'офіс', 'інше'] as const;
 
 export const createProjectSchema = z.object({
   title: z.string().min(1).max(200),
   description: z.string().optional(),
-  category: z.enum(projectCategories).default('kitchen'),
+  category: z.enum(projectCategories).default('кухня'),
   isPublished: z.boolean().default(false),
   isFeatured: z.boolean().default(false),
 });

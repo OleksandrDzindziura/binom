@@ -29,7 +29,8 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: false,
-    disableSignUp: true,
+    // Off in dev so `pnpm db:seed` can create users; keep prod closed.
+    disableSignUp: isProduction,
   },
   session: {
     cookieCache: {

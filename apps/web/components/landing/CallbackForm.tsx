@@ -10,7 +10,7 @@ function isValidPhone(value: string): boolean {
   return digits.length >= 10 && digits.length <= 13;
 }
 
-export function CallbackForm({ carId }: { carId?: number }) {
+export function CallbackForm() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
@@ -46,7 +46,11 @@ export function CallbackForm({ carId }: { carId?: number }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    createCallback.mutate({ name, phone, message: message || undefined, carId });
+    createCallback.mutate({
+      name,
+      phone,
+      message: message || undefined,
+    });
   };
 
   if (submitted) {
@@ -65,7 +69,7 @@ export function CallbackForm({ carId }: { carId?: number }) {
           placeholder="Ваше ім'я"
           value={name}
           onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: undefined })); }}
-          className={`w-full px-4 py-3 rounded-lg bg-slate-800 border text-white placeholder-slate-400 focus:outline-none transition-colors ${
+          className={`w-full px-4 py-3 rounded-2xl bg-slate-800 border text-white placeholder-slate-400 focus:outline-none transition-colors ${
             errors.name ? 'border-red-500 focus:border-red-500' : 'border-slate-700 focus:border-amber-400'
           }`}
         />
@@ -78,7 +82,7 @@ export function CallbackForm({ carId }: { carId?: number }) {
           placeholder="+380671234567"
           value={phone}
           onChange={(e) => { setPhone(e.target.value); setErrors((p) => ({ ...p, phone: undefined })); }}
-          className={`w-full px-4 py-3 rounded-lg bg-slate-800 border text-white placeholder-slate-400 focus:outline-none transition-colors ${
+          className={`w-full px-4 py-3 rounded-2xl bg-slate-800 border text-white placeholder-slate-400 focus:outline-none transition-colors ${
             errors.phone ? 'border-red-500 focus:border-red-500' : 'border-slate-700 focus:border-amber-400'
           }`}
         />
@@ -90,13 +94,13 @@ export function CallbackForm({ carId }: { carId?: number }) {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         rows={3}
-        className="px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 resize-none transition-colors"
+        className="px-4 py-3 rounded-2xl bg-slate-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 resize-none transition-colors"
       />
 
       <button
         type="submit"
         disabled={createCallback.isPending}
-        className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded-lg transition-colors disabled:opacity-50"
+        className="px-6 py-3 bg-amber-400 cursor-pointer hover:bg-amber-600 text-slate-900 font-semibold rounded-2xl transition-colors disabled:opacity-50"
       >
         {createCallback.isPending ? 'Надсилання...' : 'Надіслати заявку'}
       </button>
