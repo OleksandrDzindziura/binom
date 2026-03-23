@@ -6,10 +6,10 @@ import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 export const metadata: Metadata = {
   title: 'Часті запитання',
   description:
-    'Відповіді на часті запитання про купівлю автомобіля, кредитування, Trade-In, викуп авто та послуги AV SALON RV.',
+    'Відповіді на часті запитання про виготовлення та сервіс меблів.',
   openGraph: {
-    title: 'Часті запитання — AV SALON RV',
-    description: 'Відповіді на найпоширеніші запитання про послуги автосалону AV SALON RV.',
+    title: 'Часті запитання — Binom Mebli',
+    description: 'Відповіді на найпоширеніші запитання про виготовлення та сервіс меблів.',
   },
 };
 

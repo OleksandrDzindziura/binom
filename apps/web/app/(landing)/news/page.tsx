@@ -5,10 +5,10 @@ import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 export const metadata: Metadata = {
   title: 'Новини',
   description:
-    'Новини автосалону AV SALON RV — актуальні пропозиції, нові надходження та корисна інформація про автомобілі.',
+    'Новини Binom Mebli — актуальні пропозиції, нові надходження та корисна інформація про виготовлення та сервіс меблів.',
   openGraph: {
-    title: 'Новини — AV SALON RV',
-    description: 'Актуальні новини та пропозиції від автосалону AV SALON RV у Рівному.',
+    title: 'Новини — Binom Mebli',
+    description: 'Актуальні новини та пропозиції від Binom Mebli у Львові.',
   },
 };
 

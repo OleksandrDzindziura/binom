@@ -166,7 +166,7 @@ export default function ProjectDetailClient({ id }: { id: string }) {
         </div>
 
         {/* Callback Form */}
-        <section className="mt-12 py-12 text-center">
+        <section className="py-12 text-center">
           <h2 className="text-2xl font-bold mb-4 text-black">
             Цікавить цей проект? <span className="text-amber-400">Залиште заявку!</span>
           </h2>

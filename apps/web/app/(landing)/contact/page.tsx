@@ -5,10 +5,10 @@ import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 export const metadata: Metadata = {
   title: 'Контакти',
   description:
-    'Контакти автосалону AV SALON RV — адреси майданчиків у Рівному та Обарові, телефони, email, графік роботи. Залиште заявку онлайн.',
+    'Контакти Binom Mebli — адреси майданчиків у Львові, телефони, email, графік роботи. Залиште заявку онлайн.',
   openGraph: {
-    title: 'Контакти — AV SALON RV',
-    description: 'Зв\'яжіться з AV SALON RV — адреси, телефони, email та форма зворотного зв\'язку.',
+    title: 'Контакти — Binom Mebli',
+    description: 'Зв\'яжіться з Binom Mebli — адреси, телефони, email та форма зворотного зв\'язку.',
   },
 };
 
