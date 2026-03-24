@@ -1,12 +1,9 @@
 'use client';
 
 import { useState, startTransition } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import { orpc } from '@/lib/orpc';
-import { useFavorites } from '@/hooks/use-favorites';
-import { Heart } from 'lucide-react';
+import FurnitureCard from '@/components/landing/FurnitureCard';
 
 
 
@@ -26,8 +23,6 @@ export default function PortfolioClient() {
     setFilters(updater);
     setPage(1);
   };
-  const { toggle, isFavorite } = useFavorites();
-
   const { data, isLoading } = useQuery(orpc.catalog.projects.list.queryOptions({
     input: { ...filters, page, limit: 12 },
   }));
@@ -37,8 +32,7 @@ export default function PortfolioClient() {
 
   return (
     <div className="py-8">
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-8 text-black">Каталог проектів</h1>
+      <h1 className="text-3xl font-bold mb-8 text-black">Каталог проектів</h1>
 
         {/* Filters */}
           <select
@@ -68,54 +62,7 @@ export default function PortfolioClient() {
               <>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {projects.map((p) => (
-                    <div
-                      key={p.id}
-                      className="bg-slate-900 rounded-lg overflow-hidden border border-slate-800 hover:border-amber-400/50 transition-colors group relative"
-                    >
-                      <button
-                        onClick={() => toggle(p.id)}
-                        className="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
-                        aria-label={isFavorite(p.id)
-                          ? 'Видалити з вибраного'
-                          : 'Додати у вибране'}
-                      >
-                        <Heart
-                          className={`h-5 w-5 transition-colors ${
-                            isFavorite(p.id)
-                              ? 'fill-red-500 text-red-500'
-                              : 'text-white/70 hover:text-white'
-                          }`}
-                        />
-                      </button>
-                      <Link href={`/portfolio/${p.id}`}>
-                        <div className="aspect-[4/3] bg-slate-800 flex items-center justify-center overflow-hidden">
-                          {p.imageUrl
-                            ? (
-                              <Image
-                                src={p.imageUrl}
-                                alt={`${p.title}`}
-                                width={400}
-                                height={300}
-                                className="w-full h-full object-cover"
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                              />
-                            )
-                            : (
-                              <span className="text-slate-500 text-sm">Фото</span>
-                            )}
-                        </div>
-                        <div className="p-4">
-                          <div className="flex items-center justify-between mb-2">
-                            <p className="font-semibold text-white group-hover:text-amber-400 transition-colors">
-                                {p.title}
-                            </p>
-                          </div>
-                          <div className="grid grid-cols-2 gap-1 text-xs text-slate-400">
-                            <span>{projectCategories[p.category]?.label ?? p.category}</span>
-                        </div>
-                        </div>
-                      </Link>
-                    </div>
+                    <FurnitureCard key={p.id} id={p.id} title={p.title} imageUrl={p.imageUrl} category={p.category} href={`/portfolio/${p.id}`} />
                   ))}
                 </div>
 
@@ -139,7 +86,6 @@ export default function PortfolioClient() {
                 )}
               </>
             )}
-      </div>
     </div>
   );
 }

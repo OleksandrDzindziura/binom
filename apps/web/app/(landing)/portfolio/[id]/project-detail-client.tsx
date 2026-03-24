@@ -36,8 +36,8 @@ export default function ProjectDetailClient({ id }: { id: string }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const { toggle, isFavorite } = useFavorites();
 
-  if (isLoading) return <div className="container mx-auto px-4 py-12 text-center text-slate-400">Завантаження...</div>;
-  if (!project) return <div className="container mx-auto px-4 py-12 text-center text-slate-400">Проект не знайдено</div>;
+  if (isLoading) return <div className="py-12 text-center text-slate-400">Завантаження...</div>;
+  if (!project) return <div className="py-12 text-center text-slate-400">Проект не знайдено</div>;
 
   // Alias for existing JSX blocks (the page was originally implemented for cars).
   const projectData = project;
@@ -49,14 +49,13 @@ export default function ProjectDetailClient({ id }: { id: string }) {
 
   return (
     <div className="py-8">
-      <div className="container mx-auto px-4">
-        <Link
-          href="/portfolio"
-          className="flex items-center gap-2 text-amber-400 hover:text-amber-300 mb-6"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Назад до каталогу
-        </Link>
+      <Link
+        href="/portfolio"
+        className="flex items-center gap-2 text-amber-400 hover:text-amber-300 mb-6"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Назад до каталогу
+      </Link>
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Photo Gallery */}
@@ -172,8 +171,6 @@ export default function ProjectDetailClient({ id }: { id: string }) {
           </h2>
           <CallbackForm />
         </section>
-      </div>
-
       {/* Lightbox */}
       {lightboxOpen && images.length > 0 && (
         <Lightbox

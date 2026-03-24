@@ -8,12 +8,12 @@ export default function NewsClient() {
     input: { publishedOnly: true },
   }));
 
-  if (isLoading) return <div className="container mx-auto px-4 py-12 text-center text-slate-400">Завантаження...</div>;
+  if (isLoading) return <div className="py-12 text-center text-slate-400">Завантаження...</div>;
 
   return (
     <div className="py-12">
-      <div className="container mx-auto px-4 max-w-3xl">
-        <h1 className="text-3xl font-bold mb-8 text-center">Новини</h1>
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-center text-black">Новини</h1>
         <div className="space-y-6">
           {(articles ?? []).map((article) => (
             <article

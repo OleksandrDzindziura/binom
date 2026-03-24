@@ -37,11 +37,11 @@ const services = [
 export function ServicesSection() {
   return (
     <section id="services" className="py-16 bg-background">
-      <div className="container mx-auto px-4">
+      <div>
         <h2 className="text-3xl md:text-4xl text-foreground font-extrabold text-center mb-4 uppercase">
           Як ми працюємо
         </h2>
-        <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
+        <p className="text-center text-muted-foreground mb-12">
           Повний цикл від першої консультації до встановлення та гарантійного обслуговування.
         </p>
 
@@ -65,7 +65,7 @@ export function ServicesSection() {
         <div className="text-center mt-12">
           <Link
             href="/contact"
-            className="inline-block px-10 py-4 border-2 border-border text-foreground font-bold text-lg hover:bg-accent transition-colors uppercase"
+            className="inline-block px-10 py-4 border-2 border-border text-black font-bold text-lg hover:bg-accent transition-colors uppercase"
           >
             Замовити консультацію
           </Link>

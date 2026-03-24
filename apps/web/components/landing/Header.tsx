@@ -2,6 +2,7 @@
 
 import {
   ChevronRight,
+  Heart,
   MenuIcon,
   Phone,
   X,
@@ -24,6 +25,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { useFavorites } from '@/hooks/use-favorites';
 
 interface MenuItem {
   title: string;
@@ -48,6 +50,8 @@ export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  const { favorites } = useFavorites()
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > MOBILE_BREAKPOINT) {
@@ -65,8 +69,8 @@ export function Header() {
 
   return (
     <Fragment>
-      <header className="pointer-events-auto fixed top-0 left-0 right-0 z-[999] flex w-full flex-col items-center bg-white backdrop-blur border-b border-gray-200">
-        <NavigationMenu className="h-16 max-w-full w-full">
+      <header className="pointer-events-auto sticky top-0 left-0 right-0 z-[999] flex w-full flex-col items-center bg-white backdrop-blur border-b border-gray-200">
+        <NavigationMenu className="max-w-full w-full">
           <div className="relative z-[999] container grid w-full grid-cols-2 items-center justify-between gap-8 xl:grid-cols-3 px-4">
             {/* Logo */}
             <Link href={LOGO.url} className="flex items-center gap-2">
@@ -146,8 +150,17 @@ export function Header() {
               </NavigationMenuList>
             </div>
 
+
             {/* Phone + mobile toggle */}
             <div className="justify-self-end flex items-center gap-3">
+              
+            {favorites.length > 0 && (
+              <div className="justify-self-end flex items-center gap-3">
+                <Link href="/favorites">
+                  <Heart className="h-4 w-4 text-amber-400" />
+                </Link>
+              </div>
+            )}
               <div className="hidden lg:flex items-center gap-2">
                 <a
                   href="tel:+380 96 178 68 32"

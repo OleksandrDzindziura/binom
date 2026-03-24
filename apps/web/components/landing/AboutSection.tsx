@@ -7,7 +7,7 @@ export function AboutSection() {
 
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 max-w-4xl text-center">
+      <div className="text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold mb-8 uppercase text-black">Про нас</h2>
 
         {expanded && (

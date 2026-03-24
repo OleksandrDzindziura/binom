@@ -102,7 +102,7 @@ export function CatalogSection() {
 
   return (
     <section id="catalog" className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+      <div>
         <h2 className="text-3xl md:text-4xl text-black font-extrabold text-center mb-10 uppercase">
           Наші роботи
         </h2>

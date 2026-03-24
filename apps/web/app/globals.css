@@ -213,21 +213,10 @@
   @apply py-16 md:py-28;
 }
 
-.bigger-container {
-  margin-inline: auto;
+.container {
+  margin: 0 auto;
   padding-inline: 1.25rem;
-}
-
-@media (min-width: 40rem) {
-  .bigger-container {
-    max-width: none;
-  }
-}
-
-@media (min-width: 1200px) {
-  .bigger-container {
-    max-width: 1912px;
-  }
+  max-width: 1208px;
 }
 
 /* Scroll-triggered reveal animations */

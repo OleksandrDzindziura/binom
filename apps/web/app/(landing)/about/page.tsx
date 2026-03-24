@@ -52,9 +52,9 @@ export default function AboutPage() {
     <>
     <BreadcrumbJsonLd items={[{ name: 'Про нас', path: '/about' }]} />
     <div className="py-12">
-      <div className="container mx-auto px-4">
+      <div>
         {/* Hero */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6 uppercase">Про нас</h1>
           <p className="text-lg text-black leading-relaxed">
             Binom Mebli — виробник меблів на замовлення з понад 10-річним досвідом. Виготовляємо кухні, шафи-купе, меблі для ванної кімнати та офісу з контролем якості на кожному етапі.
@@ -62,7 +62,7 @@ export default function AboutPage() {
         </div>
 
         {/* Story */}
-        <div className="max-w-4xl mx-auto mb-16">
+        <div className="mb-16">
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h2 className="text-2xl font-bold mb-4">Наша історія</h2>
@@ -133,7 +133,7 @@ export default function AboutPage() {
 
 
         {/* CTA */}
-        <section className="max-w-xl mx-auto text-center">
+        <section className="text-center">
           <h2 className="text-2xl text-black font-bold mb-4">
             Маєте питання? {' '}<span className="text-amber-400">Залиште заявку!</span>
           </h2>

@@ -10,7 +10,7 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
   const all = [{ name: 'Головна', href: '/' }, ...items];
 
   return (
-    <nav aria-label="Breadcrumb" className="container mx-auto px-4 py-3">
+    <nav aria-label="Breadcrumb" className="py-3">
       <ol className="flex items-center gap-1 text-sm text-slate-400">
         {all.map((item, i) => {
           const isLast = i === all.length - 1;

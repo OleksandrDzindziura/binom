@@ -9,8 +9,10 @@ export default function LandingLayout({
   return (
     <div className="min-h-screen flex flex-col bg-white text-white">
       <Header />
-      <main className="flex-1 min-h-[calc(100vh-4rem)] ">
-        {children}
+      <main className="flex-1 min-h-[calc(100vh-4rem)]">
+        <div className="container">
+          {children}
+        </div>
       </main>
       <Footer />
     </div>

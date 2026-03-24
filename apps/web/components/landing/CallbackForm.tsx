@@ -62,7 +62,7 @@ export function CallbackForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="space-y-1">
         <input
           type="text"

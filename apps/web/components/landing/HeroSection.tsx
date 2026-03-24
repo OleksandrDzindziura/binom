@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function HeroSection() {
   return (
-    <section className="relative  flex min-h-[calc(100dvh-5rem)] flex-col overflow-hidden rounded-sm text-white">
+    <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen flex min-h-[calc(100dvh-5rem)] flex-col overflow-hidden rounded-sm text-white">
       {/* Background image */}
       <Image
         src="/hero.webp"
@@ -17,7 +17,7 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
 
       {/* Content */}
-      <div className=" container mx-auto relative z-10 flex flex-1 flex-col items-start justify-center px-8 pt-16 md:px-16 lg:px-24">
+      <div className=" container relative z-10 flex flex-1 flex-col items-start justify-center px-8 pt-16 md:px-16 lg:px-24">
         <h1 className="text-4xl font-extrabold leading-tight tracking-tighter uppercase sm:text-6xl md:text-7xl lg:text-8xl">
           Меблі{' '}
           <span className="text-amber-400">на замовлення</span>
@@ -42,7 +42,7 @@ export function HeroSection() {
       </div>
 
       {/* Bottom feature cards */}
-      <div className="relative container mx-auto z-10 grid grid-cols-2 gap-3 p-4 sm:gap-4 sm:p-5 md:grid-cols-4 md:gap-5 md:p-6">
+      <div className="relative container z-10 grid grid-cols-2 gap-3 p-4 sm:gap-4 sm:p-5 md:grid-cols-4 md:gap-5 md:p-6">
         <FeatureCard title="500+" subtitle="виконаних проектів" />
         <FeatureCard title="10+" subtitle="років досвіду" />
         <FeatureCard title="100%" subtitle="гарантія якості" />
