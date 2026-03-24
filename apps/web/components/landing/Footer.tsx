@@ -4,8 +4,8 @@ import Link from 'next/link';
 export function Footer() {
   return (
     <footer className="bg-white border-t border-slate-800">
-      <div className="container mx-auto px-4 py-10">
-        <div className="grid md:grid-cols-4 gap-8 items-start">
+      <div className="container">
+        <div className="grid md:grid-cols-4 gap-8 items-start py-5">
           {/* Logo & Contact */}
           <div>
             <Link href="/" className="text-xl font-extrabold text-amber-400 tracking-wider uppercase">
@@ -66,7 +66,7 @@ export function Footer() {
           <div className="flex justify-end">
             <Link
               href="/contact"
-              className="flex items-center gap-2 px-6 py-3 border-2 border-gray-700 text-black font-bold hover:bg-gray-100 transition-colors"
+              className="flex items-center gap-2 px-6 py-3 border-2 border-gray-700 text-sm text-black font-bold hover:bg-gray-100 transition-colors"
             >
               <Phone className="h-5 w-5 text-black" />
               Замовити консультацію

@@ -2,6 +2,7 @@
 
 import {
   ChevronRight,
+  Heart,
   MenuIcon,
   Phone,
   X,
@@ -24,6 +25,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { useFavorites } from '@/hooks/use-favorites';
 
 interface MenuItem {
   title: string;
@@ -47,6 +49,8 @@ const MOBILE_BREAKPOINT = 1024;
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const { favorites } = useFavorites()
 
   useEffect(() => {
     const handleResize = () => {
@@ -146,8 +150,17 @@ export function Header() {
               </NavigationMenuList>
             </div>
 
+
             {/* Phone + mobile toggle */}
             <div className="justify-self-end flex items-center gap-3">
+              
+            {favorites.length > 0 && (
+              <div className="justify-self-end flex items-center gap-3">
+                <Link href="/favorites">
+                  <Heart className="h-4 w-4 text-amber-400" />
+                </Link>
+              </div>
+            )}
               <div className="hidden lg:flex items-center gap-2">
                 <a
                   href="tel:+380 96 178 68 32"

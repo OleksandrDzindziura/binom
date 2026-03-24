@@ -17,8 +17,8 @@ export default function ContactPage() {
     <>
     <BreadcrumbJsonLd items={[{ name: 'Контакти', path: '/contact' }]} />
     <div className="py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-8 text-center">Контакти</h1>
+      <div>
+        <h1 className="text-3xl font-bold mb-8 text-center text-black">Контакти</h1>
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div className="space-y-6">
