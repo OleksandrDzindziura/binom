@@ -2,7 +2,16 @@ import type { NextConfig } from 'next';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000';
 
+// next-pwa injects webpack config; Next 16 defaults to Turbopack for `next build` — use `next build --webpack` in package.json.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+});
+
 const nextConfig: NextConfig = {
+  reactStrictMode: true,
   output: 'standalone',
   typescript: {
     ignoreBuildErrors: true,
@@ -38,4 +47,4 @@ const nextConfig: NextConfig = {
   ],
 };
 
-export default nextConfig;
+export default withPWA(nextConfig);

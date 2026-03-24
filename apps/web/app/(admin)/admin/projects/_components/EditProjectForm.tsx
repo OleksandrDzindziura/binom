@@ -55,7 +55,7 @@ export default function EditProjectForm({ project, projectId }: EditProjectFormP
           data: {
             title: value.title,
             description: value.description || undefined,
-            category: value.category as 'кухня' | 'шафа' | 'ванна' | 'офіс' | 'інше',
+            category: value.category as 'kitchen' | 'wardrobe' | 'bathroom' | 'office' | 'other',
             isPublished: value.isPublished,
             isFeatured: value.isFeatured,
           },

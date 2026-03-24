@@ -19,12 +19,24 @@ const fontDisplay = Archivo({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://binom-mebli.com'),
+
   title: {
     default: 'Binom Mebli — Кухні та меблі на замовлення',
     template: '%s — Binom Mebli',
   },
+
   description:
-    'Binom Mebli — виготовлення та встановлення кухонь, шаф та меблів на замовлення. Перегляньте наші роботи.',
+    'Binom Mebli — виготовлення та встановлення кухонь, шаф та меблів на замовлення.',
+
+  manifest: '/site.webmanifest',
+
+  themeColor: '#ffffff',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Binom Mebli',
+  },
+
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -33,18 +45,16 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-touch-icon.png',
   },
-  manifest: '/site.webmanifest',
+
   openGraph: {
     siteName: 'Binom Mebli',
     locale: 'uk_UA',
     type: 'website',
   },
+
   twitter: {
     card: 'summary_large_image',
   },
-  ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION
-    ? { verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } }
-    : {}),
 };
 
 const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
