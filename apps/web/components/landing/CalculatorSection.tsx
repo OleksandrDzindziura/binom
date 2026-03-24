@@ -1,10 +1,26 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { orpc } from '@/lib/orpc';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+
+/** Defaults (немає окремого delivery-ендпоінта в API — було зі старого сайту). */
+const DEFAULT_SETTINGS: Record<string, number> = {
+  shipping_usa: 1500,
+  auction_fee_percent: 10,
+  export_docs: 0,
+  port_unload: 0,
+  port_to_city: 0,
+  border_crossing: 0,
+  excise_petrol_per_liter: 50,
+  excise_diesel_per_liter: 75,
+  excise_electric: 1,
+  customs_duty_percent: 10,
+  vat_percent: 20,
+  brokerage_fee: 300,
+  customs_delivery: 0,
+  commission: 0,
+};
 
 export function CalculatorSection() {
   const [carPrice, setCarPrice] = useState(0);
@@ -15,12 +31,8 @@ export function CalculatorSection() {
   const [auction, setAuction] = useState<string>('');
   const [usaShipping, setUsaShipping] = useState<string>('');
 
-  const { data: settings } = useQuery(orpc.delivery.getSettingsMap.queryOptions({ input: {} }));
-
   const calculation = useMemo(() => {
-    if (!settings) return null;
-
-    const s = settings as Record<string, number>;
+    const s = DEFAULT_SETTINGS;
     const shippingUsa = s.shipping_usa ?? 1500;
     const auctionFee = carPrice * (s.auction_fee_percent ?? 10) / 100;
     const exportDocs = s.export_docs ?? 0;
@@ -61,7 +73,7 @@ export function CalculatorSection() {
       commission: Math.round(commission),
       total: Math.round(total),
     };
-  }, [carPrice, engineType, engineVolume, settings]);
+  }, [carPrice, engineType, engineVolume]);
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 30 }, (_, i) => currentYear - i);
@@ -83,7 +95,6 @@ export function CalculatorSection() {
 
   return (
     <section id="calculator" className="py-16 bg-white">
-      <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-0">
           {/* Results */}
           <div className="bg-slate-900 border border-slate-700 p-6 lg:p-8">
@@ -224,7 +235,6 @@ export function CalculatorSection() {
         >
           Хочу детальну пропозицію <ChevronRight className="h-5 w-5" />
         </Link>
-      </div>
     </section>
   );
 }
