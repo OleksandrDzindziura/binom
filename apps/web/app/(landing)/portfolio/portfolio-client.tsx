@@ -111,7 +111,7 @@ export default function PortfolioClient() {
                             </p>
                           </div>
                           <div className="grid grid-cols-2 gap-1 text-xs text-slate-400">
-                            <span>{p.category}</span>
+                            <span>{projectCategories[p.category]?.label ?? p.category}</span>
                         </div>
                         </div>
                       </Link>

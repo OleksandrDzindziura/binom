@@ -25,27 +25,6 @@ export default function NewProjectPage() {
 
   const [formError, setFormError] = useState('');
 
-  const mapCategoryForCreate = (
-    category: string | undefined,
-  ): 'кухня' | 'шафа' | 'ванна' | 'офіс' | 'інше' => {
-    // UI select uses categoryLabels keys: kitchen/wardrobe/bathroom/office/other,
-    // but API expects enum values: kitchen/шафа/ванна/офіс/інше.
-    switch (category) {
-      case 'kitchen':
-        return 'кухня';
-      case 'wardrobe':
-        return 'шафа';
-      case 'bathroom':
-        return 'ванна';
-      case 'office':
-        return 'офіс';
-      case 'other':
-        return 'інше';
-      default:
-        return 'кухня';
-    }
-  };
-
   const form = useAppForm({
     defaultValues: {
       title: '',
@@ -66,7 +45,7 @@ export default function NewProjectPage() {
         const project = await createProject.mutateAsync({
           title: value.title,
           description: value.description || undefined,
-          category: mapCategoryForCreate(value.category),
+          category: value.category as 'kitchen' | 'wardrobe' | 'bathroom' | 'office' | 'other',
           isPublished: value.isPublished,
           isFeatured: value.isFeatured,
         });
