@@ -71,7 +71,7 @@ export function Header() {
     <Fragment>
       <header className="pointer-events-auto sticky top-0 left-0 right-0 z-[999] flex w-full flex-col items-center bg-white backdrop-blur border-b border-gray-200">
         <NavigationMenu className="max-w-full w-full">
-          <div className="relative z-[999] container grid w-full grid-cols-2 items-center justify-between gap-8 xl:grid-cols-3 px-4">
+          <div className="relative container grid w-full grid-cols-2 items-center justify-between gap-8 xl:grid-cols-3">
             {/* Logo */}
             <Link href={LOGO.url} className="flex items-center gap-2">
               <svg className="w-auto h-[70px] lg:h-[90px]" viewBox="0 0 462 339" fill="none" xmlns="http://www.w3.org/2000/svg">
